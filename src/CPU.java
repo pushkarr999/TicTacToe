@@ -6,14 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class Game extends JPanel implements ActionListener {
+public class CPU extends JPanel implements ActionListener {
+    int count = 0;
     Random random = new Random();
     JPanel title_panel = new JPanel();
     JPanel button_panel = new JPanel();
     JLabel textfield = new JLabel();
     JButton[] buttons = new JButton[9];
     boolean player1_turn;
-    Game() {
+    CPU() {
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800,800);
         this.setBackground(new Color(50,50,50));
@@ -46,8 +47,12 @@ public class Game extends JPanel implements ActionListener {
         title_panel.add(textfield);
         this.add(title_panel, BorderLayout.NORTH);
         this.add(button_panel);
+        start();
+    }
 
-        firstTurn();
+    private void start() {
+        player1_turn=true;
+        textfield.setText("X turn");
     }
 
     @Override
@@ -60,39 +65,31 @@ public class Game extends JPanel implements ActionListener {
                         buttons[i].setText("X");
                         player1_turn=false;
                         textfield.setText("O turn");
+                        count++;
                         check();
+                        if(count<5)
+                            cpuPlay();
                     }
-                }
-                else{
-                    if(buttons[i].getText()==""){
-                        buttons[i].setForeground(new Color(50,204,50));
-                        buttons[i].setText("O");
-                        player1_turn=true;
-                        textfield.setText("X turn");
-                        check();
-                    }
-
                 }
             }
         }
     }
-    public void firstTurn() {
-        try {
-            Thread.sleep(2000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
+
+    private void cpuPlay() {
+        Random rand = new Random();
+        int cpuPos;
+        while (true){
+            cpuPos = rand.nextInt(9);
+            if(buttons[cpuPos].getText()=="")
+                break;
         }
-
-
-        if(random.nextInt(2)==0){
-            player1_turn=true;
-            textfield.setText("X turn");
-        }else{
-            player1_turn=false;
-            textfield.setText("0 turn");
-        }
-
+        buttons[cpuPos].setForeground(new Color(50,204,50));
+        buttons[cpuPos].setText("O");
+        player1_turn=true;
+        textfield.setText("X turn");
+        check();
     }
+
     public void check(){
         if((buttons[0].getText()=="X") &&
                 (buttons[1].getText()=="X") &&

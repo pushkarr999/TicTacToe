@@ -3,12 +3,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameFrame extends JFrame implements ActionListener {
-    CPU game;
+public class GameFrame2 extends JFrame implements ActionListener {
+    Game game;
     JButton resetButton;
     JPanel resetPanel = new JPanel();
     JButton backBtn;
-    GameFrame(){
+    GameFrame2(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800,1000);
         this.getContentPane().setBackground(new Color(0,0,255));
@@ -33,7 +33,7 @@ public class GameFrame extends JFrame implements ActionListener {
         resetButton.setLocation(0,0);
         resetButton.addActionListener(this);
         backBtn.addActionListener(this);
-        game = new CPU();
+        game = new Game();
         resetPanel.add(resetButton);
         resetPanel.add(backBtn);
         this.add(resetPanel,BorderLayout.SOUTH);
@@ -44,7 +44,7 @@ public class GameFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==resetButton){
             this.remove(game);
-            game = new CPU();
+            game = new Game();
             this.add(game);
             SwingUtilities.updateComponentTreeUI(this);
         }
